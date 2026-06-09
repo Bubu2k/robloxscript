@@ -1,20 +1,18 @@
 --[[ 
-    PREMIUM CYBERPUNK KEY SYSTEM 2026 - AUTO SYNC & AUTO SAVE EDITION
-    Cấu hình Script: Mới (Luarmor API)
+    PREMIUM CYBERPUNK KEY SYSTEM 2026 - OBFUSCATED EDITION
+    Protected Framework Style & Anti-String Search
 ]]
 
-local Config_URL = "https://raw.githubusercontent.com/Bubu2k/config.txt/refs/heads/main/config.txt" 
-local File_Name = "EclipseKeyCache.txt" -- Tên file lưu trữ key trong thư mục workspace
+-- Các cấu hình hệ thống đã mã hóa chuỗi (Hex/Bytecode Escape)
+local Config_URL = "\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\66\117\98\117\51\107\47\99\111\110\102\105\103\46\116\120\116\47\114\101\102\115\47\104\101\97\100\115\47\109\97\105\110\47\99\111\110\102\105\103\46\116\120\116"
+local File_Name = "\69\99\108\105\112\115\101\75\101\121\67\97\99\104\101\46\116\120\116"
 
----------------------------------------------------------
--- HỆ THỐNG TỰ ĐỘNG TẢI DỮ LIỆU CHỦ
----------------------------------------------------------
-local HttpService = game:GetService("HttpService")
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("\72\116\116\112\83\101\114\118\105\99\101")
+local TweenService = game:GetService("\84\119\101\101\110\83\101\114\118\105\99\101")
+local UserInputService = game:GetService("\85\115\101\114\73\110\112\117\116\83\101\114\118\105\99\101")
 
-local fetchedLink = "https://funlink.io/Pu_s2wc" -- Dự phòng
-local fetchedKey = "vietnam76" -- Dự phòng
+local fetchedLink = "\104\116\116\112\115\58\47\47\102\117\110\108\105\110\107\46\105\111\47\80\117\95\115\50\119\99"
+local fetchedKey = "\118\105\101\116\110\97\109\55\54"
 
 local success, response = pcall(function()
     return game:HttpGet(Config_URL)
@@ -30,33 +28,32 @@ if success and response then
 end
 
 ---------------------------------------------------------
--- HÀM KÍCH HOẠT SCRIPT CHÍNH CỦA BẠN (ĐÃ CẬP NHẬT LUARMOR V3)
+-- HÀM KÍCH HOẠT SCRIPT CHÍNH (LUARMOR LOADER PROTECTED)
 ---------------------------------------------------------
 local function ExecuteMainScript()
     local loadSuccess, err = pcall(function()
-        -- Thay đổi URL nạp script chính Luarmor v3 tại đây
-        loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/4796888c8c56891e752644e0eb4140f6.lua"))()
+        -- URL Luarmor API của bạn đã được ẩn hoàn toàn tại đây
+        local _loader = "\104\116\116\112\115\58\47\47\97\112\105\46\108\117\97\114\109\111\114\46\110\101\116\47\102\105\108\101\115\47\118\51\47\108\111\97\100\101\114\115\47\52\55\57\54\56\56\56\99\56\99\53\54\56\57\49\101\55\53\50\54\52\52\101\48\101\98\52\49\52\48\102\54\46\108\117\97"
+        local raw_run = loadstring or load
+        raw_run(game:HttpGet(_loader))()
     end)
     
     if not loadSuccess then
-        warn("Lỗi Script Chính: " .. tostring(err))
+        warn("\76\231\105\32\83\99\114\105\112\116\32\67\104\237\110\104\58\32" .. tostring(err))
     end
 end
 
----------------------------------------------------------
--- KIỂM TRA CHỨC NĂNG LƯU KEY TỰ ĐỘNG (AUTO LOGIN)
----------------------------------------------------------
+-- KIỂM TRA CHỨC NĂNG LƯU KEY TỰ ĐỘNG
 if readfile and isfile and isfile(File_Name) then
     local savedKey = readfile(File_Name)
     if savedKey == fetchedKey then
-        -- Nếu key đã lưu trùng khớp với key server, tự động chạy luôn không hiện UI
         ExecuteMainScript()
         return 
     end
 end
 
 ---------------------------------------------------------
--- KHỞI TẠO GIAO DIỆN CHUẨN (NẾU CHƯA CÓ KEY HOẶC KEY HẾT HẠN)
+-- KHỞI TẠO GIAO DIỆN CHUẨN
 ---------------------------------------------------------
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "EclipseKeySystem_v3"
@@ -256,13 +253,28 @@ SubmitBtn.MouseButton1Click:Connect(function()
         SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 220, 110)
         SubmitBtn.TextColor3 = Color3.fromRGB(8, 8, 12)
         
-        -- TIẾN HÀNH LƯU KEY CHO LẦN SAU
         if writefile then
             pcall(function()
                 writefile(File_Name, userKey)
             end)
         end
         
+        TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 1}):Play()
+        TweenService:Create(DropShadow, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
+        task.wait(0.4)
+        ScreenGui:Destroy()
+        
+        ExecuteMainScript()
+    else
+        SubmitBtn.Text = "ACCESS DENIED!"
+        SubmitBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 20)
+        AdvancedNotify("Mã khóa không chính xác hoặc đã hết hạn!", Color3.fromRGB(255, 0, 40))
+        task.wait(2)
+        SubmitBtn.Text = "ACTIVATE SCRIPT"
+        SubmitBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 40)
+    end
+end)
+       
         -- Hiệu ứng ẩn UI mượt mà
         TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 1}):Play()
         TweenService:Create(DropShadow, TweenInfo.new(0.3), {ImageTransparency = 1}):Play()
